@@ -10,4 +10,25 @@ router.get('/', Notes.findAll,
 		});
 	});
 
+router.get('/:id', Notes.findById,
+	(req, res) => {
+		res.json({
+			notes: res.locals.note
+		});
+	});
+
+router.post('/', Notes.create,
+	(req, res) => {
+		res.json({
+			notes: res.locals.newNotes
+		});
+	});
+
+
+
+
+
+
+
+
 module.exports = router;
