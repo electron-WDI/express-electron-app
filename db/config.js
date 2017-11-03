@@ -5,7 +5,7 @@ const cn = {
     host: 'localhost',
     port: 5432,
     database: 'electron_db',
-    user: 'matthewkim'
+    user: 'yvelinesay'
 }
 
 const db = pgp(cn);

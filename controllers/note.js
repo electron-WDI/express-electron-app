@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Notes = require('../models/note');
 
-router.get('/', Notes.findAll, 
+router.get('/', Notes.findAll,
 	(req, res) => {
 		res.json({
 			notes: res.locals.allNotes
@@ -23,12 +23,5 @@ router.post('/', Notes.create,
 			notes: res.locals.newNotes
 		});
 	});
-
-
-
-
-
-
-
 
 module.exports = router;
