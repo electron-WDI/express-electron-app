@@ -24,4 +24,23 @@ router.post('/', Notes.create,
 		});
 	});
 
+// router.put('/:id', Notes.update,
+// 	(req, res) => {
+// 		res.json({
+// 			notes: res.locals.edit
+// 		});
+// 	});
+
+
+router.delete('/:id', Notes.destroy,
+	(req, res) => {
+		res.send('deleted')
+	});
+
+
+
+
+
+
+
 module.exports = router;

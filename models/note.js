@@ -26,10 +26,10 @@ Notes.findById = (req, res, next) => {
 
 
 Notes.create = (req, res, next) => {
-	const { title, description } = req.body;
-	db.one(`INSERT INTO saved 
-		(title, description) VALUES 
-		($1, $2) RETURNING *`, [title, description])
+	const { title, description, date_created } = req.body;
+	db.one(`INSERT INTO saved
+		(title, description, date_created) VALUES
+		($1, $2, $3) RETURNING *`, [title, description, date_created])
 	.then((newNotes) => {
 		res.locals.newNotes = newNotes;
 		next();
@@ -40,44 +40,29 @@ Notes.create = (req, res, next) => {
 };
 
 
-// Notes.update = (req, res, next) => {
-// 	const { name, year, grapes, country, region, description, picture, price } = req.body;
-// 	const { id } = req.params;
-// 	console.log(req.body);
-// 	console.log(req.params);
-// 	db.oneOrNone(`UPDATE saved SET 
-// 		name=$1, year=$2, grapes=$3, country=$4, region=$5, description=$6, picture=$7, price=$8 WHERE id=$9
-// 		RETURNING *`, [name, year, grapes, country, region, description, picture, price, id])
-// 	.then(edit => {
-// 		res.locals.edit = edit;
-// 		next();
-// 	})
-// 	.catch(err => {
-// 		console.log(`ERROR UPDATING: ${err}`)
-// 	});
-// };
+Notes.update = (req, res, next) => {
+	const { title, description, date_saved } = req.body;
+	const { id } = req.params;
+	db.oneOrNone(`UPDATE saved SET
+		title=$1, description=$2, date_saved=$3)
+		WHERE id=$4 RETURNING *`,
+		[title, description, date_saved, id])
+	.then(edit => {
+		res.locals.edit = edit;
+		next();
+	})
+	.catch(err => {
+		console.log(`ERROR UPDATING: ${err}`)
+	});
+};
 
-// Notes.destroy = (req, res, next) => {
-// 	const { id } = req.params;
-// 	db.none(`DELETE FROM saved WHERE id=$1`, [id])
-// 	.then(() => next())
-// 	.catch(err => {
-// 		console.log(`Could not destroy wine: ${err}`)
-// 	});
-// };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Notes.destroy = (req, res, next) => {
+	const { id } = req.params;
+	db.none(`DELETE FROM saved WHERE id=$1`, [id])
+	.then(() => next())
+	.catch(err => {
+		console.log(`Could not destroy note: ${err}`)
+	});
+};
 
 module.exports = Notes
